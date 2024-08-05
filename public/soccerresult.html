@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soccer Score Result</title>
+    <link rel="stylesheet" href="styles1.css">
+
+    <style>
+    #result-message {
+        background-color: #f0f0f0;
+            border: 2px solid black;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            border-radius: 10px;
+
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Soccer Score Result</h1>
+    </header>
+    <main>
+        <p id="result-message"></p>
+        <div id="comparison"></div>
+    </main>
+    <script>
+        function getQueryParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        function validateAndGetValue(param, defaultValue) {
+            const value = parseFloat(getQueryParameter(param));
+            console.log(`Param: ${param}, Value: ${value}`);
+            return isNaN(value) ? defaultValue : value;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const score = getQueryParameter('score') || '0';
+            const resultMessage = document.getElementById('result-message');
+            resultMessage.textContent = `Your calculated score is: ${score}`;
+
+            const comparison = document.getElementById('comparison');
+            const averages = {
+                'height': 180,
+                'weight': 70,
+                'speed': 7.5,
+                'jumping-height': 60,
+                'long-jump': 5,
+                'avg-goals': 0.5,
+                'avg-assists': 0.7,
+                'avg-shots': 2,
+                'avg-win-striker': 10,
+                'avg-pass-accuracy': 85
+            };
+
+            const userValues = {
+                'height': validateAndGetValue('height', 0),
+                'weight': validateAndGetValue('weight', 0),
+                'speed': validateAndGetValue('speed', 0),
+                'jumping-height': validateAndGetValue('jumping-height', 0),
+                'long-jump': validateAndGetValue('long-jump', 0),
+                'avg-goals': validateAndGetValue('avg-goals', 0),
+                'avg-assists': validateAndGetValue('avg-assists', 0),
+                'avg-shots': validateAndGetValue('avg-shots', 0),
+                'avg-win-striker': validateAndGetValue('avg-win-striker', 0),
+                'avg-pass-accuracy': validateAndGetValue('avg-pass-accuracy', 0)
+            };
+
+            let comparisonHTML = '<h2>Comparison with Averages</h2>';
+            for (const key in averages) {
+                comparisonHTML += `<div class="comparison-item"><strong>${key}:</strong> Your value = ${userValues[key]}, Average = ${averages[key]}</div>`;
+            }
+            comparison.innerHTML = comparisonHTML;
+        });
+    </script>
+</body>
+</html>

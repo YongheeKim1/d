@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soccer Players Analysis</title>
+    <link rel="stylesheet" href="soccer.css">
+    <style>
+        .options label {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .number-fields {
+            margin-top: 20px;
+        }
+
+        .number-fields label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100px; /* 작은 필드 크기 설정 */
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .info-button {
+            background-color: #007bff;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+
+        .tooltip {
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            width: 200px;
+        }
+
+        .long-content {
+            height: 65px;
+            background: linear-gradient(white, lightgrey);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Rate Your Soccer Score</h1>
+        <p id="welcome-message">Fill in the blanks</p>
+    </header>
+    <h2>This page is for analyzing and calculating in detail</h2>
+    <main>
+        <form id="soccer-rate" action="/submit" method="post">
+            <fieldset>
+                <legend><strong>Choose Your Position in Soccer</strong></legend>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="position" value="Striker"> 
+                        Striker
+                    </label>
+                    <label>
+                        <input type="radio" name="position" value="Midfielder"> 
+                        Midfielder
+                    </label>
+                    <label>
+                        <input type="radio" name="position" value="Defender"> 
+                        Defender
+                    </label>
+                </div>
+            </fieldset>
+            <fieldset class="number-fields">
+                <legend><strong>Enter the Numbers:</strong></legend>
+                <label for="height">Height:
+                    <input type="number" id="height" name="height" step="any">
+                    <button type="button" class="info-button" onclick="showTooltip(event, 'Height in centimeters.')">?</button>
+                </label>
+                <label for="weight">Weight:
+                    <input type="number" id="weight" name="weight" step="any">
+                    <button type="button" class="info-button" onclick="showTooltip(event, 'Weight in kilograms.')">?</button>
+                </label>
+                <label for="speed">Speed:
+                    <input type="number" id="speed" name="speed" step="any">
+                    <button type="button" class="info-button" onclick="showTooltip(event, 'Speed in meters per second.')">?</button>
+                </label>
+                <label for="jumping-height">Jumping Height:
+                    <input type="number" id="jumping-height" name="jumping-height" step="any">
+                    <button type="button" class="info-button" onclick="showTooltip(event, 'Jumping height in centimeters.')">?</button>
+                </label>
+                <label for="long-jump">The Long Jump:
+                    <input type="number" id="long-jump" name="long-jump" step="any">
+                    <button type="button" class="info-button" onclick="showTooltip(event, 'Long jump distance in meters.')">?</button>
+                </label>
+            </fieldset>
+            <br>
+            <fieldset>
+                <legend><strong>Fill Your Details</strong></legend>
+                <div class="number-fields">
+                    <label for="avg-goals">Average Goal Scored:
+                        <input type="number" id="avg-goals" name="avg-goals" step="any">
+                    </label>
+                    <label for="avg-assists">Average Assists:
+                        <input type="number" id="avg-assists" name="avg-assists" step="any">
+                    </label>
+                    <label for="avg-shots">Average Shots on Goal:
+                        <input type="number" id="avg-shots" name="avg-shots" step="any">
+                    </label>
+                    <label for="avg-win-striker">Average Win the Striker:
+                        <input type="number" id="avg-win-striker" name="avg-win-striker" step="any">
+                    </label>
+                    <label for="avg-pass-accuracy">Average Pass Accuracy:
+                        <input type="number" id="avg-pass-accuracy" name="avg-pass-accuracy" step="any">
+                        <button type="button" class="info-button" onclick="showTooltip(event, 'Write average percentage without %.')">?</button>
+                    </label>
+                </div>
+            </fieldset>
+            <br>
+            <button type="submit">Rate</button>
+        </form>
+        <div class="long-content"></div>
+    </main>
+    <div id="tooltip" class="tooltip"></div>
+
+    <script>
+        function showTooltip(event, text) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'block';
+            tooltip.style.left = event.pageX + 'px';
+            tooltip.style.top = event.pageY + 'px';
+            tooltip.innerHTML = text;
+        }
+
+        document.addEventListener('click', function(event) {
+            const tooltip = document.getElementById('tooltip');
+            if (!event.target.matches('.info-button')) {
+                tooltip.style.display = 'none';
+            }
+        });
+
+        document.getElementById('soccer-rate').addEventListener('submit', function(event) {
+            event.preventDefault(); // 폼의 기본 제출 동작을 막습니다.
+
+            const requiredFields = ['height', 'weight', 'speed', 'jumping-height', 'long-jump', 'avg-goals', 'avg-assists', 'avg-shots', 'avg-win-striker', 'avg-pass-accuracy'];
+            let allFieldsFilled = true;
+
+            const maxValues = {
+                'height': 200, // cm
+                'weight': 100, // kg
+                'speed': 10, // m/s
+                'jumping-height': 100, // cm
+                'long-jump': 8, // m
+                'avg-goals': 2, // per game
+                'avg-assists': 3, // per game
+                'avg-shots': 5, // per game
+                'avg-win-striker': 20, // per game
+                'avg-pass-accuracy': 100 // percentage
+            };
+
+            let score = 0;
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+
+            requiredFields.forEach(function(field) {
+                const element = document.querySelector(`[name="${field}"]`);
+                if (element && element.value.trim()) {
+                    const value = parseFloat(element.value.trim());
+                    const maxValue = maxValues[field]; // 필드 이름과 maxValues 키가 일치
+                    score += (value / maxValue) * 10;
+                    data[field] = value;
+                    // 디버깅 출력
+                    console.log(`Field: ${field}, Value: ${value}, Score: ${(value / maxValue) * 10}`);
+                } else {
+                    allFieldsFilled = false;
+                    console.log(`Field: ${field} is empty`);
+                }
+            });
+
+            const position = document.querySelector('input[name="position"]:checked');
+            if (!position) {
+                allFieldsFilled = false;
+                console.log('Position is not selected');
+            } else {
+                data.position = position.value;
+            }
+
+            if (allFieldsFilled) {
+                score = Math.min(score, 100); // 점수는 최대 100을 넘지 않습니다.
+                data.score = score.toFixed(2);
+                alert(`Your score is: ${score.toFixed(2)} out of 100`);
+                const params = new URLSearchParams(data).toString();
+                window.location.href = `soccerresult.html?${params}`; // 모든 필드가 채워지면 다음 페이지로 이동
+            } else {
+                alert('All fields are required.');
+            }
+        });
+    </script>
+    <footer>
+        <p>&copy; 2024 Sports Analysis. All rights reserved.</p>
+    </footer>
+    <script src="soccer.js"></script>
+</body>
+</html>

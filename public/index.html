@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Analysis</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Sports Analysis webpage!</h1>
+    </header>
+    <main>
+        <img src="images/sports.webp" alt="sports analyst picture" width="250px" height="250px">
+        <p id="welcome-message">This page is for analyzing personal sports players</p>
+        <p>Press the button to continue</p>
+        <button onclick="showMessage()">Click to enter</button>
+    </main>
+    <footer>
+        <h3>&copy; 2024 Sports Analysis. All rights reserved.</h3>
+    </footer>
+    <script>
+        function showMessage() {
+            document.getElementById('welcome-message').innerText = 'Button clicked! Analyzing sports data...';
+            window.open('page2.html', '_blank'); 
+        }
+    </script>
+</body>
+</html>

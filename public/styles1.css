@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+main {
+    text-align: center;
+    margin: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #f1f1f1;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+fieldset {
+    margin-bottom: 20px;
+}
+
+.comparison-item {
+    background-color: #f9f9f9; /* 배경 색상 */
+    border: 1px solid #ddd;    /* 테두리 */
+    padding: 10px;             /* 패딩 */
+    margin-bottom: 10px;       /* 아래 마진 */
+    border-radius: 5px;        /* 모서리 둥글게 */
+}
+
+.comparison-item strong {
+    display: block;
+    margin-bottom: 5px;
+}

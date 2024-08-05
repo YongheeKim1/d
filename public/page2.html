@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information</title>
+    <link rel="stylesheet" href="page2.css">
+    <style>
+        .options label {
+            display: block;
+            margin-right: 10px;
+        }
+
+        .number-fields {
+            margin-top: 20px;
+        }
+
+        .number-fields label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 60px; 
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .tooltip {
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            width: 200px;
+        }
+
+        .long-content {
+            height: 100px;
+            background: linear-gradient(white, lightgrey);
+        }
+    </style>
+</head>
+<body>
+    <header>This page is for asking the your favorite sports</header>
+    <header><h1>Sports type</h1></header>
+    <form id="personal-info-form" action="/submit" method="post">
+        <fieldset>
+            <legend><strong>Choose your sports:</strong></legend>
+            <div class="options">
+                <label>
+                    <input type="radio" name="sport" value="baseball">
+                    Baseball
+                </label>
+                <img src="images/baseball.jpeg" alt="Baseball picture" width="100" height="100">
+                <label>
+                    <input type="radio" name="sport" value="basketball">
+                    Basketball
+                </label>
+                <img src="images/basketball.jpeg" alt="Basketball picture" width="100" height="100">
+                <label>
+                    <input type="radio" name="sport" value="soccer">
+                    Soccer
+                </label>
+                <img src="images/soccer.jpeg" alt="Soccer picture" width="100" height="100">
+                <label>
+                    <input type="radio" name="sport" value="tennis">
+                    Tennis
+                </label>
+                <img src="images/tennis.jpeg" alt="Tennis picture" width="100" height="100">
+                <label>
+                    <input type="radio" name="sport" value="swimming">
+                    Swimming
+                </label>
+                <img src="images/swimming.jpeg" alt="Swimming picture" width="100" height="100">
+            </div>
+        </fieldset>
+        <br>
+        <button type="submit">Next</button>
+    </form>
+    
+    <div id="tooltip" class="tooltip"></div>
+    <div class="long-content"></div>
+    
+    <script>
+        document.getElementById('personal-info-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const selectedSport = document.querySelector('input[name="sport"]:checked').value;
+    
+            switch (selectedSport) {
+                case 'baseball':
+                    window.location.href = 'baseball.html';
+                    break;
+                case 'basketball':
+                    window.location.href = 'basketball.html';
+                    break;
+                case 'soccer':
+                    window.location.href = 'soccer.html';
+                    break;
+                case 'tennis':
+                    window.location.href = 'tennis.html';
+                    break;
+                case 'swimming':
+                    window.location.href = 'swimming.html';
+                    break;
+                default:
+                    alert('Please select a sport.');
+            }
+        });
+    </script>
+    <script src="page2.js"></script>
+    <footer>
+        <p>&copy; 2024 Sports Analysis. All rights reserved.</p>
+    </footer>
+</body>
+</html>
